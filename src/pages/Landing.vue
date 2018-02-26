@@ -13,7 +13,7 @@ import SpinningLogo from '../components/SpinningLogo';
 export default {
   name: 'landing',
   components: {
-    'spinning-logo': SpinningLogo
+    SpinningLogo
   }
 }
 </script>

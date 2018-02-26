@@ -3,7 +3,10 @@
     <navbar/>
     <main>
       <transition :name="transitionName">
-        <router-view/>
+        <router-view v-if="userLoaded"/>
+        <div class="page-centered" v-else>
+          <spinning-logo :size="125" :ease="false"/>
+        </div>
       </transition>
     </main>
   </div>
@@ -11,16 +14,22 @@
 
 <script>
 import Navbar from './components/Navbar';
+import SpinningLogo from './components/SpinningLogo';
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
   components: {
-    'navbar': Navbar
+    Navbar,
+    SpinningLogo
   },
   data() {
     return {
-      transitionName: 'slide-left'
+      transitionName: 'fade'
     }
+  },
+  computed: {
+    ...mapState('auth', ['user', 'userLoaded']),
   },
   watch: {
     '$route' (toRoute, fromRoute) {
@@ -29,10 +38,11 @@ export default {
       const toLength = toRoute.path.length;
       const fromLength = fromRoute.path.length;
 
-      this.transitionName = toDepth === fromDepth ?
-        (toLength < fromLength ? 'slide-right' : 'slide-left') :
-        (toDepth < fromDepth ? 'slide-right' : 'slide-left');
-      console.log(this.transitionName);
+      this.transitionName = this.userLoaded ?
+        (toDepth === fromDepth ?
+          (toLength < fromLength ? 'slide-right' : 'slide-left') :
+          (toDepth < fromDepth ? 'slide-right' : 'slide-left'))
+        : 'fade';
     }
   }
 }
@@ -62,6 +72,13 @@ $navbar-background-color: transparent;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 
 .slide-left-enter, .slide-right-leave-active {

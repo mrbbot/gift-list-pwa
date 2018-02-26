@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <nav class="navbar" :class="{'is-light': !isLanding}" role="navigation" aria-label="main navigation">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item"><img src="../assets/logo.png" alt="Gift List"></router-link>
 
@@ -30,11 +30,6 @@ export default {
   data() {
     return {
       isActive: false
-    }
-  },
-  computed: {
-    isLanding() {
-      return this.$route.name.startsWith('landing');
     }
   }
 }

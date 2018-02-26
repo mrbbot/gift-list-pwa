@@ -1,6 +1,7 @@
 import Vue from 'vue';
-import App from './App';
+
 import router from './router';
+import store from './store';
 
 import * as firebase from './firebase';
 
@@ -8,6 +9,8 @@ import fontawesome from '@fortawesome/fontawesome';
 import fontawesomeSolid from '@fortawesome/fontawesome-free-solid';
 import fontawesomeBrands from '@fortawesome/fontawesome-free-brands';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+
+import App from './App';
 
 firebase.init();
 
@@ -21,5 +24,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 });
