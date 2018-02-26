@@ -22,13 +22,15 @@ export function init() {
   auth.onAuthStateChanged(function(user) {
     store.commit('auth/changeAuthState', user);
 
-    if (user) {
-      console.log('onAuthStateChanged: Signed in: ' + user.email);
-      router.push('/app/');
-    } else {
-      console.log('onAuthStateChanged: Signed out');
-      if(router.currentRoute.name.startsWith('app')) {
-        router.push('/');
+    if(router.currentRoute.name.startsWith('landing') || router.currentRoute.name.startsWith('app')) {
+      if (user) {
+        console.log('onAuthStateChanged: Signed in: ' + user.email);
+        router.push('/app/');
+      } else {
+        console.log('onAuthStateChanged: Signed out');
+        if (router.currentRoute.name.startsWith('app')) {
+          router.push('/');
+        }
       }
     }
   });

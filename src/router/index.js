@@ -21,7 +21,7 @@ const router = new Router({
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'landing-login',
       component: Login,
       beforeEnter: (toRoute, fromRoute, next) => {
         if(store.state.auth.userLoaded && store.state.auth.user) {
