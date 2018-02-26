@@ -2,7 +2,7 @@
   <div class="nav">
     <nav class="navbar" :class="{'is-light': !isLanding}" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item" @click.native="logoClick"><img src="../assets/logo.png" alt="Gift List"></router-link>
+        <router-link to="/" class="navbar-item"><img src="../assets/logo.png" alt="Gift List"></router-link>
 
         <div class="navbar-burger" @click="isActive = !isActive" :class="{'is-active': isActive}">
           <span></span>
@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import { eventBus } from "../main";
-
 export default {
   name: 'navbar',
   data() {
@@ -37,11 +35,6 @@ export default {
   computed: {
     isLanding() {
       return this.$route.name.startsWith('landing');
-    }
-  },
-  methods: {
-    logoClick() {
-      eventBus.$emit('logoClick');
     }
   }
 }

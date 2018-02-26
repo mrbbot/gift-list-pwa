@@ -17,8 +17,6 @@ fontawesome.library.add(fontawesomeSolid, fontawesomeBrands);
 // noinspection JSUnresolvedFunction
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-export const eventBus = new Vue();
-
 // noinspection JSUnusedGlobalSymbols
 new Vue({
   el: '#app',
