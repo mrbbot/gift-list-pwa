@@ -12,8 +12,14 @@ const auth = {
   },
   mutations: {
     changeAuthState(state, user) {
+      console.log(user);
       state.user = user;
       state.userLoaded = true;
+    }
+  },
+  getters: {
+    signedIn(state) {
+      return state.userLoaded && !!state.user;
     }
   }
 };

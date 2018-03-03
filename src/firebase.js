@@ -17,6 +17,7 @@ export function init() {
 
   providers[GOOGLE_PROVIDER] = new firebase.auth.GoogleAuthProvider();
   providers[FACEBOOK_PROVIDER] = new firebase.auth.FacebookAuthProvider();
+  providers[FACEBOOK_PROVIDER].addScope('email');
   providers[TWITTER_PROVIDER] = new firebase.auth.TwitterAuthProvider();
 
   auth.onAuthStateChanged(function(user) {
@@ -25,6 +26,7 @@ export function init() {
     if(router.currentRoute.name.startsWith('landing') || router.currentRoute.name.startsWith('app')) {
       if (user) {
         console.log('onAuthStateChanged: Signed in: ' + user.email);
+
         router.push('/app/');
       } else {
         console.log('onAuthStateChanged: Signed out');
@@ -46,12 +48,18 @@ export function getProviderNameForProviderId(providerId) {
 }
 
 export function signIn(providerId) {
-  console.log(providers[providerId]);
   // noinspection JSIgnoredPromiseFromCall
   auth.signInWithRedirect(providers[providerId]);
 }
 
-window.signOut = function() {
-  // noinspection JSIgnoredPromiseFromCall
+export function signOut() {
   auth.signOut();
+}
+
+window.requestToken = function() {
+  firebase.auth().currentUser.getIdToken(false).then(function(idToken) {
+    console.log(idToken);
+  }).catch(function(error) {
+    console.error(error);
+  });
 };

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar/Navbar';
 import SpinningLogo from './components/SpinningLogo';
 import { mapState } from 'vuex'
 
@@ -89,5 +89,9 @@ $navbar-background-color: transparent;
 .slide-left-leave-active, .slide-right-enter {
   opacity: 0;
   transform: translate(-30px, 0);
+}
+
+img.profile-picture {
+  border-radius: 50%;
 }
 </style>
