@@ -12,21 +12,19 @@
       </div>
       <div v-if="signedIn" class="navbar-menu" :class="{'is-active': isActive}">
         <div class="navbar-start">
-          <a class="navbar-item">My Lists</a>
+          <router-link to="/app/lists/" class="navbar-item">My Lists</router-link>
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              Friends<span class="tag is-rounded is-warning" style="margin: 0.1rem 0 0 0.5rem">1</span>
-            </a>
+            <router-link to="/app/" class="navbar-link">Friends<span class="tag is-rounded is-warning">1</span></router-link>
             <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item">
+              <router-link to="/app/lists/brendan" class="navbar-item">
                 <friend name="Brendan Coll" email="mrbbot@gmail.com" photo="http://via.placeholder.com/112x112/03A9F4/FFFFFF?text=B"/>
-              </a>
-              <a class="navbar-item">
-                <friend name="Rose Coll" email="mosey2003@gmail.com" photo="http://via.placeholder.com/112x112/FF9800/FFFFFF?text=R"/>
-              </a>
-              <a class="navbar-item">
-                <friend name="Jessica White" email="jfw11@medschl.cam.ac.uk" photo="http://via.placeholder.com/112x112/009688/FFFFFF?text=J"/>
-              </a>
+              </router-link>
+              <router-link to="/app/lists/rose" class="navbar-item">
+                <friend name="Rose Coll" email="mrbbot@gmail.com" photo="http://via.placeholder.com/112x112/FF9800/FFFFFF?text=R"/>
+              </router-link>
+              <router-link to="/app/lists/jessica" class="navbar-item">
+                <friend name="Jessica White" email="mrbbot@gmail.com" photo="http://via.placeholder.com/112x112/009688/FFFFFF?text=J"/>
+              </router-link>
               <div class="navbar-item has-text-grey-light">
                 <friend name="Kate White" email="Friend request sent" photo="http://via.placeholder.com/112x112/F44336/FFFFFF?text=K"/>
               </div>
@@ -88,8 +86,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['user']),
-    ...mapGetters('auth', ['signedIn'])
+    ...mapState('user', ['user']),
+    ...mapGetters('user', ['signedIn'])
   },
   methods: {
     signOut() {

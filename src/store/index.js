@@ -4,14 +4,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 // noinspection JSUnusedGlobalSymbols
-const auth = {
+const user = {
   namespaced: true,
   state: {
     user: {},
     userLoaded: false
   },
   mutations: {
-    changeAuthState(state, user) {
+    changeUser(state, user) {
       console.log(user);
       state.user = user;
       state.userLoaded = true;
@@ -26,6 +26,6 @@ const auth = {
 
 export default new Vuex.Store({
   modules: {
-    auth
+    user
   }
 });

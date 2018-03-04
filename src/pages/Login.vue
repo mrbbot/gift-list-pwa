@@ -1,5 +1,5 @@
 <template>
-  <div class="page-centered login">
+  <div class="page is-centered login">
     <article v-if="messageShown" class="message is-warning">
       <div class="message-header">
         <p>Accounts</p>

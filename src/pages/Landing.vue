@@ -1,9 +1,9 @@
 <template>
-  <div class="page-centered page-landing has-text-centered">
+  <div class="page is-centered is-landing has-text-centered">
     <spinning-logo :ease="true"/>
     <h1 class="title">Gift List</h1>
     <h2 class="subtitle">Never buy the wrong present again...</h2>
-    <router-link to="/login" class="button is-primary">Sign in</router-link>
+    <router-link to="/login/" class="button is-primary">Sign in</router-link>
   </div>
 </template>
 
@@ -19,13 +19,13 @@ export default {
 </script>
 
 <style lang="scss">
-.page-landing {
+.page.is-centered.is-landing {
   .title {
-    margin: 0.75rem 0 2rem 0;
+    margin: 0.75rem 0 0 0;
   }
 
   .subtitle {
-    margin: 2rem 0 1.5rem 0;
+    margin: 0.6rem 0 1.5rem 0;
     max-width: 200px;
   }
 }

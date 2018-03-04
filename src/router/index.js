@@ -6,6 +6,7 @@ import Landing from '../pages/Landing'
 import Login from '../pages/Login'
 import Legal from '../pages/Legal'
 import Dashboard from '../pages/Dashboard'
+import Lists from '../pages/Lists'
 
 // noinspection JSUnresolvedFunction
 Vue.use(Router);
@@ -20,11 +21,11 @@ const router = new Router({
       component: Landing
     },
     {
-      path: '/login',
+      path: '/login/',
       name: 'landing-login',
       component: Login,
       beforeEnter: (toRoute, fromRoute, next) => {
-        if(store.state.auth.userLoaded && store.state.auth.user) {
+        if(store.state.user.userLoaded && store.state.user.user) {
           next('/app/');
           return;
         }
@@ -32,7 +33,7 @@ const router = new Router({
       }
     },
     {
-      path: '/legal',
+      path: '/legal/',
       name: 'legal',
       component: Legal
     },
@@ -40,6 +41,16 @@ const router = new Router({
       path: '/app/',
       name: 'app-dashboard',
       component: Dashboard
+    },
+    {
+      path: '/app/lists/',
+      name: 'app-lists',
+      component: Lists
+    },
+    {
+      path: '/app/lists/:uid',
+      name: 'app-lists-user',
+      component: Lists
     }
   ]
 });
@@ -49,8 +60,8 @@ router.beforeEach((toRoute, fromRoute, next) => {
     next('/');
     return;
   }
-  if(toRoute.name.startsWith('app') && store.state.auth.userLoaded && !store.state.auth.user) {
-    next('/login');
+  if(toRoute.name.startsWith('app') && store.state.user.userLoaded && !store.state.user.user) {
+    next('/login/');
     return;
   }
   next();

@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="page section">
     <div class="container">
 
     </div>

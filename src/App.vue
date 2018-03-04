@@ -4,7 +4,7 @@
     <main>
       <transition :name="transitionName">
         <router-view v-if="userLoaded"/>
-        <div class="page-centered" v-else>
+        <div class="page is-centered" v-else>
           <spinning-logo :size="125" :ease="false"/>
         </div>
       </transition>
@@ -29,25 +29,29 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['user', 'userLoaded']),
+    ...mapState('user', ['user', 'userLoaded']),
   },
   watch: {
     '$route' (toRoute, fromRoute) {
       const toDepth = toRoute.path.split('/').length;
       const fromDepth = fromRoute.path.split('/').length;
-      const toLength = toRoute.path.length;
-      const fromLength = fromRoute.path.length;
+      // const toLength = toRoute.path.length;
+      // const fromLength = fromRoute.path.length;
 
       this.transitionName = this.userLoaded ?
         (toDepth === fromDepth ?
-          (toLength < fromLength ? 'slide-right' : 'slide-left') :
+          /*(toLength < fromLength ? 'slide-right' : 'slide-left') :*/
+          'fade' :
           (toDepth < fromDepth ? 'slide-right' : 'slide-left'))
         : 'fade';
+
+      console.log(this.transitionName);
     }
   }
 }
 </script>
 
+<!--suppress SassScssResolvedByNameOnly -->
 <style lang="scss">
 $primary: #E91E63;
 $dark: #1A1A1A;
@@ -59,19 +63,26 @@ $navbar-background-color: transparent;
   flex-grow: 1;
 }
 
-.page-centered {
+.page {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: -1;
+
   transition: all .5s cubic-bezier(.55,0,.1,1);
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  &.is-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:not(.is-centered) {
+    top: $navbar-height;
+  }
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -93,5 +104,9 @@ $navbar-background-color: transparent;
 
 img.profile-picture {
   border-radius: 50%;
+}
+
+.navbar-link .tag.is-rounded {
+  margin: 0.1rem 0 0 0.5rem
 }
 </style>

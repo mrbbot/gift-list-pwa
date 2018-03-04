@@ -21,13 +21,15 @@ export function init() {
   providers[TWITTER_PROVIDER] = new firebase.auth.TwitterAuthProvider();
 
   auth.onAuthStateChanged(function(user) {
-    store.commit('auth/changeAuthState', user);
+    store.commit('user/changeUser', user);
 
     if(router.currentRoute.name.startsWith('landing') || router.currentRoute.name.startsWith('app')) {
       if (user) {
         console.log('onAuthStateChanged: Signed in: ' + user.email);
 
-        router.push('/app/');
+        if(router.currentRoute.name.startsWith('landing')) {
+          router.push('/app/');
+        }
       } else {
         console.log('onAuthStateChanged: Signed out');
         if (router.currentRoute.name.startsWith('app')) {
