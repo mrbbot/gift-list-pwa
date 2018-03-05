@@ -1,5 +1,5 @@
 <template>
-  <div class="page is-centered login">
+  <div class="page is-centered is-login">
     <article v-if="messageShown" class="message is-warning">
       <div class="message-header">
         <p>Accounts</p>
@@ -101,7 +101,7 @@ export default {
 </script>
 
 <style lang="scss">
-.login {
+.is-login {
   .message {
     max-width: 350px;
 

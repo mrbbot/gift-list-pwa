@@ -6,6 +6,7 @@ import Landing from '../pages/Landing'
 import Login from '../pages/Login'
 import Legal from '../pages/Legal'
 import Dashboard from '../pages/Dashboard'
+import Friends from '../pages/Friends'
 import Lists from '../pages/Lists'
 
 // noinspection JSUnresolvedFunction
@@ -41,6 +42,11 @@ const router = new Router({
       path: '/app/',
       name: 'app-dashboard',
       component: Dashboard
+    },
+    {
+      path: '/app/friends/',
+      name: 'app-friends',
+      component: Friends
     },
     {
       path: '/app/lists/',
