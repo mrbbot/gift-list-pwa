@@ -12,7 +12,6 @@ const user = {
   },
   mutations: {
     changeUser(state, user) {
-      console.log(user);
       state.user = user;
       state.userLoaded = true;
     }

@@ -7,7 +7,7 @@ import Login from '../pages/Login'
 import Legal from '../pages/Legal'
 import Dashboard from '../pages/Dashboard'
 import Friends from '../pages/Friends'
-import Lists from '../pages/Lists'
+import Lists from '../pages/lists/Lists'
 
 // noinspection JSUnresolvedFunction
 Vue.use(Router);

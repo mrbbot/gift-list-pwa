@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Navbar from './components/navbar/Navbar';
+import Navbar from './components/Navbar';
 import SpinningLogo from './components/SpinningLogo';
 import { mapState } from 'vuex'
 
@@ -69,7 +69,6 @@ $navbar-background-color: transparent;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: -1;
 
   transition: all .5s cubic-bezier(.55,0,.1,1);
 
@@ -86,7 +85,7 @@ $navbar-background-color: transparent;
 }
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s ease;
+  transition: opacity .25s ease;
 }
 .fade-enter, .fade-leave-active {
   opacity: 0
