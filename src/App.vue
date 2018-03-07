@@ -108,4 +108,8 @@ img.profile-picture {
 .navbar-link .tag.is-rounded {
   margin: 0.1rem 0 0 0.5rem
 }
+
+.tile.is-ancestor.can-wrap {
+  flex-wrap: wrap;
+}
 </style>

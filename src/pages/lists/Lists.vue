@@ -104,7 +104,5 @@ export default {
 </script>
 
 <style>
-.tile.is-ancestor.can-wrap {
-  flex-wrap: wrap;
-}
+
 </style>
