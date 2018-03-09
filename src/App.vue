@@ -3,25 +3,28 @@
     <navbar/>
     <main>
       <transition :name="transitionName">
-        <router-view v-if="userLoaded"/>
+        <router-view v-if="!loading"/>
         <div class="page is-centered" v-else>
           <spinning-logo :size="125" :ease="false"/>
         </div>
       </transition>
     </main>
+    <message-list/>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar';
 import SpinningLogo from './components/SpinningLogo';
-import { mapState } from 'vuex'
+import MessageList from './components/messages/MessageList';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
   components: {
     Navbar,
-    SpinningLogo
+    SpinningLogo,
+    MessageList
   },
   data() {
     return {
@@ -29,7 +32,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['user', 'userLoaded']),
+    ...mapGetters(['loading']),
   },
   watch: {
     '$route' (toRoute, fromRoute) {
@@ -38,7 +41,7 @@ export default {
       // const toLength = toRoute.path.length;
       // const fromLength = fromRoute.path.length;
 
-      this.transitionName = this.userLoaded ?
+      this.transitionName = !this.loading ?
         (toDepth === fromDepth ?
           /*(toLength < fromLength ? 'slide-right' : 'slide-left') :*/
           'fade' :

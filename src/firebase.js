@@ -21,11 +21,14 @@ export function init() {
   providers[TWITTER_PROVIDER] = new firebase.auth.TwitterAuthProvider();
 
   auth.onAuthStateChanged(function(user) {
-    store.commit('user/changeUser', user);
+    store.commit('user/updateUser', user);
+    store.commit('reset');
 
     if(router.currentRoute.name.startsWith('landing') || router.currentRoute.name.startsWith('app')) {
       if (user) {
         console.log('onAuthStateChanged: Signed in: ' + user.email);
+        // noinspection JSIgnoredPromiseFromCall
+        store.dispatch('friends/updateFriends');
 
         if(router.currentRoute.name.startsWith('landing')) {
           router.push('/app/');
@@ -58,10 +61,16 @@ export function signOut() {
   auth.signOut();
 }
 
-window.requestToken = function() {
-  firebase.auth().currentUser.getIdToken(false).then(function(idToken) {
-    console.log(idToken);
-  }).catch(function(error) {
-    console.error(error);
+export function requestToken() {
+  return new Promise(resolve => {
+    firebase.auth().currentUser.getIdToken(false).then(function(idToken) {
+      resolve(idToken);
+    }).catch(function(error) {
+      console.error(error);
+    });
   });
+}
+
+window.requestToken = function() {
+  requestToken().then(console.log);
 };

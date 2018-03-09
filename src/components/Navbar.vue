@@ -14,14 +14,13 @@
         <div class="navbar-start">
           <router-link to="/app/lists/" class="navbar-item">My Lists</router-link>
           <div class="navbar-item has-dropdown is-hoverable is-hidden-touch">
-            <router-link to="/app/friends/" class="navbar-link">Friends<span class="tag is-rounded is-warning">1</span></router-link>
+            <router-link to="/app/friends/" class="navbar-link">Friends<span v-if="requests.length > 0" class="tag is-rounded is-warning">{{requests.length}}</span></router-link>
             <div class="navbar-dropdown is-boxed">
               <friend-list/>
-              <hr class="navbar-divider">
               <router-link to="/app/friends/" class="navbar-item">Manage Friends</router-link>
             </div>
           </div>
-          <router-link to="/app/friends/" class="navbar-link is-hidden-desktop">Friends<span class="tag is-rounded is-warning">1</span></router-link>
+          <router-link to="/app/friends/" class="navbar-link is-hidden-desktop">Friends<span v-if="requests.length > 0" class="tag is-rounded is-warning">{{requests.length}}</span></router-link>
         </div>
 
         <div class="navbar-end">
@@ -62,6 +61,7 @@ export default {
   },
   computed: {
     ...mapState('user', ['user']),
+    ...mapState('friends', ['requests']),
     ...mapGetters('user', ['signedIn'])
   },
   methods: {

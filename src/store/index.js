@@ -1,30 +1,57 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { immutableDelete, immutablePush } from "./immutable";
+
+import user from './user';
+import friends from './friends';
+
 Vue.use(Vuex);
 
-// noinspection JSUnusedGlobalSymbols
-const user = {
-  namespaced: true,
+export default new Vuex.Store({
   state: {
-    user: {},
-    userLoaded: false
+    activeTasks: 0,
+    messageCount: 0,
+    messages: []
   },
   mutations: {
-    changeUser(state, user) {
-      state.user = user;
-      state.userLoaded = true;
+    startTask(state) {
+      state.activeTasks++;
+    },
+    finishTask(state) {
+      state.activeTasks--;
+    },
+    reset(state) {
+      state.friends.current = [];
+      state.friends.requests = [];
+    },
+    addMessage(state, message) {
+      state.messages = immutablePush(state.messages, message);
+      state.messageCount++;
+    },
+    removeMessage(state, id) {
+      let index = state.messages.findIndex(m => m.id === id);
+      if(index !== -1)
+        state.messages = immutableDelete(state.messages, index);
     }
   },
   getters: {
-    signedIn(state) {
-      return state.userLoaded && !!state.user;
+    loading(state) {
+      return state.activeTasks > 0 || !state.user.userLoaded;
     }
-  }
-};
-
-export default new Vuex.Store({
+  },
+  actions: {
+    addMessage({ commit, state }, message) {
+      const id = state.messageCount;
+      message.id = id;
+      commit('addMessage', message);
+      setTimeout(() => {
+        commit('removeMessage', id);
+      }, 5000);
+    }
+  },
   modules: {
-    user
+    user,
+    friends
   }
 });

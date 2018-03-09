@@ -55,12 +55,12 @@ const router = new Router({
       component: Lists
     },
     {
-      path: '/app/lists/:uid',
+      path: '/app/lists/:uid/',
       name: 'app-lists-user',
       component: Lists
     },
     {
-      path: '/app/lists/detail/:id',
+      path: '/app/lists/detail/:id/',
       name: 'app-list-detail',
       component: List
     }

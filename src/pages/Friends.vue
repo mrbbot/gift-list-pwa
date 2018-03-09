@@ -4,7 +4,6 @@
       <div class="container">
         <h1 class="title">Friends</h1>
         <friend-list :removable="true"/>
-        <hr class="navbar-divider">
         <div class="navbar-item">Add Friend</div>
         <div class="navbar-item is-add-friend-item">
           <div class="field has-addons">
@@ -21,8 +20,10 @@
   </div>
 </template>
 
+<!--suppress JSIgnoredPromiseFromCall -->
 <script>
 import FriendList from '../components/FriendList'
+import store from '../store';
 
 const emailRegularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -51,6 +52,7 @@ export default {
     addFriend() {
       if(this.emailValid) {
         console.log(this.email);
+        store.dispatch('friends/addFriend', this.email);
         this.email = '';
       }
     }
