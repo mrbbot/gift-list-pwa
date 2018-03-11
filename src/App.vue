@@ -48,7 +48,7 @@ export default {
           (toDepth < fromDepth ? 'slide-right' : 'slide-left'))
         : 'fade';
 
-      console.log(this.transitionName);
+      //console.log(this.transitionName);
     }
   }
 }
@@ -114,5 +114,30 @@ img.profile-picture {
 
 .tile.is-ancestor.can-wrap {
   flex-wrap: wrap;
+}
+
+.list, .modal {
+  transition: all .5s cubic-bezier(.55,0,.1,1);
+}
+
+.list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding-bottom: 3rem;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter.list.is-master, .modal-enter.modal,
+.modal-leave-active.list.is-master, .modal-leave-active.modal {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

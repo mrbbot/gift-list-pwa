@@ -21,7 +21,7 @@
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-info" @click="close" :disabled="!valid">{{creating ? 'Create' : 'Save'}}</button>
+        <button class="button is-info" @click="ok" :disabled="!valid">{{creating ? 'Create' : 'Save'}}</button>
         <button class="button" @click="close">Cancel</button>
       </footer>
     </div>
@@ -48,8 +48,15 @@ export default {
   methods: {
     close() {
       this.$emit('close');
+    },
+    ok() {
+      if(this.creating) {
+        this.$emit('create', this.list);
+      } else {
+        this.$emit('edit', this.list);
+      }
     }
-  },
+  }
 }
 </script>
 

@@ -12,7 +12,7 @@
       </div>
       <div v-if="signedIn" class="navbar-menu" :class="{'is-active': isActive}">
         <div class="navbar-start">
-          <router-link to="/app/lists/" class="navbar-item">My Lists</router-link>
+          <router-link :to="'/app/lists/' + user.uid + '/'" class="navbar-item">My Lists</router-link>
           <div class="navbar-item has-dropdown is-hoverable is-hidden-touch">
             <router-link to="/app/friends/" class="navbar-link">Friends<span v-if="requests.length > 0" class="tag is-rounded is-warning">{{requests.length}}</span></router-link>
             <div class="navbar-dropdown is-boxed">

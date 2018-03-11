@@ -33,11 +33,18 @@ export default {
     }
   },
   actions: {
-    updateFriends({ commit }) {
+    updateFriends({ commit, dispatch }) {
       commit('startTask', null, { root: true });
-      friendsService.getFriends().then(res => {
-        console.log(res.body);
-        commit('updateFriends', res.body);
+      friendsService.getFriends().then(result => {
+        if(result.ok) {
+          commit('updateFriends', result.body);
+        } else {
+          dispatch('addMessage', {
+            title: "Error",
+            message: `An unexpected error occurred whilst getting your friends!`,
+            type: "danger"
+          }, { root: true });
+        }
         commit('finishTask', null, { root: true });
       });
     },
@@ -66,7 +73,7 @@ export default {
           } else {
             dispatch('addMessage', {
               title: "Error",
-              message: `An unexpected error occurred!`,
+              message: `An unexpected error occurred whilst sending the request!`,
               type: "danger"
             }, { root: true });
           }
@@ -80,7 +87,7 @@ export default {
         } else {
           dispatch('addMessage', {
             title: "Error",
-            message: `An unexpected error occurred!`,
+            message: `An unexpected error occurred whilst accepting the request!`,
             type: "danger"
           }, { root: true });
         }
@@ -93,7 +100,7 @@ export default {
         } else {
           dispatch('addMessage', {
             title: "Error",
-            message: `An unexpected error occurred!`,
+            message: `An unexpected error occurred whilst rejecting the request!`,
             type: "danger"
           }, { root: true });
         }
@@ -111,7 +118,7 @@ export default {
         } else {
           dispatch('addMessage', {
             title: "Error",
-            message: `An unexpected error occurred!`,
+            message: `An unexpected error occurred whilst removing your friend!`,
             type: "danger"
           }, { root: true });
         }

@@ -8,7 +8,6 @@ import Legal from '../pages/Legal'
 import Dashboard from '../pages/Dashboard'
 import Friends from '../pages/Friends'
 import Lists from '../pages/lists/Lists'
-import List from '../pages/lists/detail/List'
 
 // noinspection JSUnresolvedFunction
 Vue.use(Router);
@@ -50,19 +49,14 @@ const router = new Router({
       component: Friends
     },
     {
-      path: '/app/lists/',
+      path: '/app/lists/:uid/',
       name: 'app-lists',
       component: Lists
     },
     {
-      path: '/app/lists/:uid/',
-      name: 'app-lists-user',
+      path: '/app/lists/:uid/:id/',
+      name: 'app-lists-detail',
       component: Lists
-    },
-    {
-      path: '/app/lists/detail/:id/',
-      name: 'app-list-detail',
-      component: List
     }
   ]
 });

@@ -20,7 +20,6 @@
   </div>
 </template>
 
-<!--suppress JSIgnoredPromiseFromCall -->
 <script>
 import FriendList from '../components/FriendList'
 import store from '../store';

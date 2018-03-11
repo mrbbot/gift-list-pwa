@@ -2,7 +2,7 @@
   <div class="card is-list">
     <header class="card-header">
       <p class="card-header-title">{{name}}</p>
-      <a v-if="yours" class="card-header-icon">
+      <a v-if="yours" @click="$emit('remove')" class="card-header-icon">
         <span class="delete"></span>
       </a>
     </header>
@@ -16,8 +16,8 @@
       </div>
     </div>
     <footer class="card-footer">
-      <a href="#" class="card-footer-item">View</a>
-      <a v-if="yours" href="#" class="card-footer-item">Edit</a>
+      <router-link :to="'./' + id + '/'" class="card-footer-item">View</router-link>
+      <a v-if="yours" @click="$emit('edit')" class="card-footer-item">Edit</a>
     </footer>
   </div>
 </template>
@@ -26,6 +26,10 @@
 export default {
   name: 'list-card',
   props: {
+    id: {
+      type: Number,
+      required: true
+    },
     name: {
       type: String,
       required: true
