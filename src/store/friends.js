@@ -20,6 +20,8 @@ export default {
       let index = state.requests.findIndex(f => f.id === id);
       let friend = state.requests[index];
       friend.state = true;
+      // noinspection JSUnresolvedVariable
+      friend.friend = friend.owner;
       state.requests = immutableDelete(state.requests, index);
       state.current = immutablePush(state.current, friend);
     },
