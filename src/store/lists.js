@@ -1,4 +1,5 @@
 import * as listsService from "./services/lists";
+import * as giftsService from "./services/gifts";
 import {immutableDelete, immutablePush} from "./immutable";
 
 const LIST_MAX_AGE = 60000;
@@ -17,7 +18,7 @@ export default {
       };
     },
     addList(state, {uid, list}) {
-      state.lists[uid].lists = immutablePush(state.lists[uid].lists, list);
+      state.lists[uid].lists = immutablePush(state.lists[uid].lists || [], list);
     },
     editList(state, {uid, list}) {
       let index = state.lists[uid].lists.findIndex(l => l.id === list.id);
@@ -27,6 +28,30 @@ export default {
     removeList(state, {uid, id}) {
       let index = state.lists[uid].lists.findIndex(l => l.id === id);
       state.lists[uid].lists = immutableDelete(state.lists[uid].lists, index);
+    },
+    addGift(state, {uid, listId, gift}) {
+      let index = state.lists[uid].lists.findIndex(l => l.id === listId);
+      state.lists[uid].lists[index].gifts = immutablePush(state.lists[uid].lists[index].gifts, gift);
+    },
+    editGift(state, {uid, listId, gift}) {
+      let listIndex = state.lists[uid].lists.findIndex(l => l.id === listId);
+      let giftIndex = state.lists[uid].lists[listIndex].gifts.findIndex(g => g.id === gift.id);
+      state.lists[uid].lists[listIndex].gifts[giftIndex].name = gift.name;
+      state.lists[uid].lists[listIndex].gifts[giftIndex].description = gift.description;
+      state.lists[uid].lists[listIndex].gifts[giftIndex].url = gift.url;
+      state.lists[uid].lists[listIndex].gifts[giftIndex].imageUrl = gift.imageUrl;
+    },
+    claimGift(state, {uid, listId, giftId, claim}) {
+      let listIndex = state.lists[uid].lists.findIndex(l => l.id === listId);
+      let giftIndex = state.lists[uid].lists[listIndex].gifts.findIndex(g => g.id === giftId);
+      state.lists[uid].lists[listIndex].gifts[giftIndex].claim = claim;
+    },
+    removeGift(state, {uid, listId, giftId}) {
+      let listIndex = state.lists[uid].lists.findIndex(l => l.id === listId);
+      let giftIndex = state.lists[uid].lists[listIndex].gifts.findIndex(g => g.id === giftId);
+      state.lists[uid].lists[listIndex].gifts = immutableDelete(
+        state.lists[uid].lists[listIndex].gifts, giftIndex
+      );
     }
   },
   actions: {
@@ -107,7 +132,93 @@ export default {
         }
         commit('finishTask', null, {root: true});
       });
+    },
 
-    }
+    createGift({commit, dispatch, state}, {uid, listId, gift}) {
+      commit('startTask', null, {root: true});
+      giftsService.createGift(listId, gift.name, gift.description, gift.url, gift.imageUrl).then(res => {
+        if(res.ok) {
+          commit('addGift', {
+            uid: uid,
+            listId: listId,
+            gift: res.body
+          });
+        } else {
+          dispatch('addMessage', {
+            title: "Error",
+            message: `An unexpected error occurred whilst adding the gift!`,
+            type: "danger"
+          }, {root: true});
+        }
+        commit('finishTask', null, {root: true});
+      });
+    },
+    editGift({commit, dispatch, state}, {uid, listId, gift}) {
+      commit('startTask', null, {root: true});
+      giftsService.editGift(listId, gift.id, gift.name, gift.description, gift.url, gift.imageUrl).then(res => {
+        if(res.ok) {
+          commit('editGift', {
+            uid: uid,
+            listId: listId,
+            gift: res.body
+          });
+        } else {
+          dispatch('addMessage', {
+            title: "Error",
+            message: `An unexpected error occurred whilst editing the gift!`,
+            type: "danger"
+          }, {root: true});
+        }
+        commit('finishTask', null, {root: true});
+      });
+    },
+    claimGift({commit, dispatch, state}, {uid, listId, gift}) {
+      commit('startTask', null, {root: true});
+      let newClaimState = gift.claim.state === 0 ? 1 : 0;
+      giftsService.claimGift(listId, gift.id, newClaimState).then(res => {
+        if(res.ok) {
+          commit('claimGift', {
+            uid: uid,
+            listId: listId,
+            giftId: gift.id,
+            claim: res.body
+          });
+        } else {
+          if(res.status === 401) {
+            dispatch('addMessage', {
+              title: "Just Claimed",
+              message: `The gift has just been claimed! Please refresh your browser.`,
+              type: "warning"
+            }, {root: true});
+          } else {
+            dispatch('addMessage', {
+              title: "Error",
+              message: `An unexpected error occurred whilst claiming the gift! It may have been deleted. Please refresh your browser.`,
+              type: "danger"
+            }, {root: true});
+          }
+        }
+        commit('finishTask', null, {root: true});
+      });
+    },
+    removeGift({commit, dispatch, state}, {uid, listId, giftId}) {
+      commit('startTask', null, {root: true});
+      giftsService.removeGift(listId, giftId).then(res => {
+        if(res.ok) {
+          commit('removeGift', {
+            uid: uid,
+            listId: listId,
+            giftId: giftId
+          });
+        } else {
+          dispatch('addMessage', {
+            title: "Error",
+            message: `An unexpected error occurred whilst removing the gift!`,
+            type: "danger"
+          }, {root: true});
+        }
+        commit('finishTask', null, {root: true});
+      });
+    },
   }
 }

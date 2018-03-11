@@ -1,6 +1,6 @@
 <template>
   <div class="card is-gift">
-    <a class="delete"></a>
+    <a v-if="yours" class="delete" @click="$emit('remove')"></a>
     <div v-if="imageUrl" class="card-image" :style="{backgroundImage: 'url(\'' + imageUrl + '\')'}"></div>
     <div class="card-content">
       <div class="content">
@@ -11,10 +11,10 @@
     <footer class="card-footer">
       <a v-if="url" :href="url" target="_blank" class="card-footer-item">View</a>
       <template v-if="!yours">
-        <a v-if="canClaim" class="card-footer-item">{{claim.state ? 'Unclaim' : 'Claim'}}</a>
+        <a v-if="canClaim" @click="$emit('claim')" class="card-footer-item">{{claim.state ? 'Unclaim' : 'Claim'}}</a>
         <div v-else class="card-footer-item">Claimed by {{claimName}}</div>
       </template>
-      <a v-if="yours" class="card-footer-item">Edit</a>
+      <a v-if="yours" @click="$emit('edit')" class="card-footer-item">Edit</a>
     </footer>
   </div>
 </template>

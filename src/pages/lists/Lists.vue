@@ -4,7 +4,7 @@
       <div class="container">
         <transition name="fade">
           <lists-master v-if="isMaster" :title="title" :uid="uid" :lists="masterLists" :yours="yours"/>
-          <lists-detail v-else :title="title" :uid="uid" :list="list" :yours="yours"/>
+          <lists-detail v-else :title="title" :uid="uid" :list="detailList" :yours="yours"/>
         </transition>
       </div>
     </section>
@@ -35,7 +35,7 @@
       },
       id() {
         // noinspection JSUnresolvedVariable
-        return this.$route.params.id;
+        return parseInt(this.$route.params.id);
       },
       isMaster() {
         return !this.id;
@@ -43,13 +43,20 @@
       masterLists() {
         return (this.lists[this.uid] || {lists: []}).lists;
       },
+      detailList() {
+        return this.masterLists.find(l => l.id === this.id) || {
+          id: -1,
+          name: 'Unknown'
+        };
+      },
       yours() {
         return this.uid === this.user.uid;
       },
       title() {
         let name = this.yours ? 'Your' :
-          this.current.find(f => f.friend === this.uid).name.split(' ')[0] + '\'s';
-        return this.isMaster ? name + ' Lists' : name + ' List';
+          (this.current.find(f => f.friend === this.uid) || {name: 'Unknown'}).name.split(' ')[0] + '\'s';
+        return this.isMaster ? name + ' Lists' :
+          name + ' ' + this.detailList.name + (this.detailList.name.toLowerCase().endsWith('list') ? '' : ' List');
       }
     },
     beforeRouteUpdate(toRoute, fromRoute, next) {

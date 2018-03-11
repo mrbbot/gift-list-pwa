@@ -8,5 +8,5 @@ module.exports = {
     storageBucket: '""',
     messagingSenderId: '"839757467008"'
   },
-  API_URL: '"https://mrbbot.co.uk:8081"'
+  API_URL: '"https://mrbbot.co.uk:7687"'
 }

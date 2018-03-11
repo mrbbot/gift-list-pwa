@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <router-link :to="signedIn ? '/app/' : '/'" class="navbar-item"><img src="../assets/logo.png" alt="Gift List"></router-link>
+        <router-link :to="signedIn ? '/app/' : '/'" class="navbar-item"><img src="../assets/logo.png" alt="Gift List"><span style="margin-left: 0.75rem" class="tag is-rounded is-warning">BETA</span></router-link>
 
         <div v-if="signedIn" class="navbar-burger" @click="isActive = !isActive" :class="{'is-active': isActive}">
           <span></span>
