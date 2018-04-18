@@ -39,7 +39,7 @@
           </a>
         </div>
       </div>
-      <div class="field">
+      <!--<div class="field">
         <div class="control">
           <a class="button" @click="signInTwitter">
           <span class="icon">
@@ -50,7 +50,7 @@
             <span class="spacer"></span>
           </a>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
